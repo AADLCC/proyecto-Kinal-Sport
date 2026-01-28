@@ -48,3 +48,7 @@ const fieldSchema = new mongoose.Schema({
         default: true,
     },
 });
+
+fieldSchema.index( { isActive: 1 } );
+
+export default mongoose.model('Field', fieldSchema);

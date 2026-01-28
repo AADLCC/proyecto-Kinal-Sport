@@ -5,6 +5,9 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { corsOption } from './cors-configuration.js'; // 1. Agregado .js
 
+// Rutas 
+import fieldRoutes from '../src/fields/field.routes.js';
+
 const BASE_URL = '/kinalSportAdmin/v1'; 
 
 const middleware = (app) => {
@@ -14,13 +17,20 @@ const middleware = (app) => {
     app.use(morgan('dev')); 
 }
 
+// Integracion de la todas las rutas
+const routes = (app) => {
+    app.use(`${BASE_URL}/fields`, fieldRoutes); 
+}
+
 // 2. Agregado 'export' y quitado el parámetro 'app'
 export const initServer = async () => { 
     const app = express(); 
     const PORT = process.env.PORT || 3001; 
 
     try {
+        // Configuracion de los middleware (Mi aplicacion)
         middleware(app); 
+        routes(app);
 
         // Primera ruta (dentro del try para asegurar que el server esté listo)
         app.get(`${BASE_URL}/health`, (req, res) => {
@@ -40,3 +50,12 @@ export const initServer = async () => {
         console.log(error);
     }
 }
+
+
+
+
+
+
+
+
+
